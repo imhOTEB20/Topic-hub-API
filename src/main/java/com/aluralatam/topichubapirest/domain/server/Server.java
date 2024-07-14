@@ -2,6 +2,7 @@ package com.aluralatam.topichubapirest.domain.server;
 
 import com.aluralatam.topichubapirest.domain.server_onboarding.ServerOnboarding;
 import com.aluralatam.topichubapirest.domain.topic.Topic;
+import com.aluralatam.topichubapirest.domain.user.DTOUpdateUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,8 +28,24 @@ public class Server {
     @OneToMany(mappedBy = "server")
     private Set<Topic> topicSet;
 
+    @Column(name = "creation_datetime")
+    private LocalDateTime creationDatetime;
+
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
+
     private String name;
     private String description;
-    private LocalDateTime creationDatetime;
-    private LocalDateTime lastUpdate;
+
+    public Server(DTORegisterServer dtoRegisterServer) {
+        this.name = dtoRegisterServer.name();
+        this.description = dtoRegisterServer.description();
+    }
+
+    public void updateData(DTOUpdateServer dtoUpdateServer) {
+        if(dtoUpdateServer.name() != null && !dtoUpdateServer.name().isEmpty())
+            this.name = dtoUpdateServer.name();
+        if(dtoUpdateServer.description() != null && !dtoUpdateServer.description().isEmpty())
+            this.description = dtoUpdateServer.description();
+    }
 }

@@ -4,9 +4,9 @@
 CREATE TABLE IF NOT EXISTS `topic_hub_api`.`servers` (
   `server_id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
-  `description` VARCHAR(500) NULL DEFAULT NULL,
-  `creation_datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `description` VARCHAR(500) NOT NULL,
+  `creation_datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `last_update` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`server_id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 21
@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS `topic_hub_api`.`topics` (
   `topic_id` BIGINT NOT NULL AUTO_INCREMENT,
   `server_id` BIGINT NOT NULL,
   `name` VARCHAR(50) NOT NULL,
-  `description` VARCHAR(500) NULL DEFAULT NULL,
-  `creation_datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `description` VARCHAR(500) NOT NULL,
+  `creation_datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`topic_id`),
   INDEX `fk_channel_server` (`server_id` ASC) VISIBLE,
   CONSTRAINT `fk_channel_server`
@@ -39,12 +39,12 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `topic_hub_api`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `topic_hub_api`.`users` (
-  `user_id` BIGINT NOT NULL,
+  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
-  `creation_datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `creation_datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `last_update` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `username` (`username` ASC) VISIBLE,
   UNIQUE INDEX `email` (`email` ASC) VISIBLE)
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `topic_hub_api`.`messages` (
   `topic_id` BIGINT NOT NULL,
   `content` VARCHAR(5000) NOT NULL,
   `status` VARCHAR(45) NULL DEFAULT 'ACTIVO',
-  `creation_datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `creation_datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `last_update` TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`message_id`),
   INDEX `fk_messages_user` (`user_id` ASC) VISIBLE,
   INDEX `fk_messages_topic` (`topic_id` ASC) VISIBLE,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `topic_hub_api`.`server_onboarding` (
   `server_onboarding_id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `server_id` BIGINT NOT NULL,
-  `joined_datetime` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `joined_datetime` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`server_onboarding_id`),
   UNIQUE INDEX `user_id` (`user_id` ASC, `server_id` ASC) VISIBLE,
   INDEX `fk_user_server_associations_server` (`server_id` ASC) VISIBLE,

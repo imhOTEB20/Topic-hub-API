@@ -28,7 +28,9 @@ public class Topic {
     @OneToMany(mappedBy = "topic")
     private Set<Message> messageSet;
 
+    @Column(name = "creation_datetime")
+    private LocalDateTime creationDatetime;
+
     private String name;
     private String description;
-    private LocalDateTime creationDatetime;
 }

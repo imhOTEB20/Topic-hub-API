@@ -27,9 +27,28 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Message> messageSet;
 
-    private String userName;
+    @Column(name = "creation_datetime")
+    private LocalDateTime creationDatetime;
+
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
+
+    private String username;
     private String password;
     private String email;
-    private LocalDateTime creationDatetime;
-    private LocalDateTime lastUpdate;
+
+    public User(DTORegisterUser dtoRegisterUser) {
+        this.username = dtoRegisterUser.username();
+        this.email = dtoRegisterUser.email();
+        this.password = dtoRegisterUser.password();
+    }
+
+    public void updateData(DTOUpdateUser dtoUpdateUser) {
+        if(dtoUpdateUser.username() != null && !dtoUpdateUser.username().isEmpty())
+            this.setUsername(dtoUpdateUser.username());
+        if(dtoUpdateUser.email() != null && !dtoUpdateUser.email().isEmpty())
+            this.setEmail(dtoUpdateUser.email());
+        if(dtoUpdateUser.password() != null && !dtoUpdateUser.password().isEmpty())
+            this.setPassword(dtoUpdateUser.password());
+    }
 }

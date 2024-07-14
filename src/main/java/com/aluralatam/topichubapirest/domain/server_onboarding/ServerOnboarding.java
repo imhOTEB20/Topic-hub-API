@@ -28,5 +28,6 @@ public class ServerOnboarding {
     @JoinColumn(name = "server_id")
     private Server server;
 
+    @Column(name = "joined_datetime")
     private LocalDateTime joinedDatetime;
 }
