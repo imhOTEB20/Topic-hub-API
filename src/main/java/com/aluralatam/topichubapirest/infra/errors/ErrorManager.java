@@ -1,4 +1,4 @@
-package com.aluralatam.topichubapirest.infra;
+package com.aluralatam.topichubapirest.infra.errors;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
