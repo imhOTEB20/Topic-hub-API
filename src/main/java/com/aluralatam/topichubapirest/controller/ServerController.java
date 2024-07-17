@@ -1,6 +1,8 @@
 package com.aluralatam.topichubapirest.controller;
 
 import com.aluralatam.topichubapirest.domain.server.*;
+import com.aluralatam.topichubapirest.domain.topic.DTOGetTopic;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,7 @@ public class ServerController {
     private ServerRepository serverRepository;
 
     @PostMapping
-    public ResponseEntity<DTOResponseServer> registerServer(@RequestBody DTORegisterServer dtoRegisterServer,
+    public ResponseEntity<DTOResponseServer> registerServer(@RequestBody @Valid DTORegisterServer dtoRegisterServer,
                                                                    UriComponentsBuilder uriComponentsBuilder) {
         var server = serverRepository.save(new Server(dtoRegisterServer));
         URI url = uriComponentsBuilder.path("/servers/{id}").buildAndExpand(server.getId()).toUri();

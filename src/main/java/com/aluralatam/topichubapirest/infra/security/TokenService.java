@@ -25,7 +25,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             return JWT.create()
-                    .withIssuer("voll med")
+                    .withIssuer("topic hub api rest")
                     .withSubject(user.getUsername())
                     .withClaim("id", user.getId())
                     .withExpiresAt(generateExpirationDate())
@@ -39,7 +39,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer("voll med")
+                    .withIssuer("topic hub api rest")
                     .build();
             DecodedJWT decodedJWT =  verifier.verify(token);
             return decodedJWT.getSubject();

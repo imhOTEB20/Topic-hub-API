@@ -2,6 +2,7 @@ package com.aluralatam.topichubapirest.domain.topic;
 
 import com.aluralatam.topichubapirest.domain.message.Message;
 import com.aluralatam.topichubapirest.domain.server.Server;
+import com.aluralatam.topichubapirest.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +26,10 @@ public class Topic {
     @JoinColumn(name = "server_id")
     private Server server;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_user")
+    private User creatorUser;
+
     @OneToMany(mappedBy = "topic")
     private Set<Message> messageSet;
 
@@ -33,4 +38,12 @@ public class Topic {
 
     private String name;
     private String description;
+
+    public Topic(DTOCreateTopic dtoCreateTopic, Server server, User creatorUser) {
+        this.server = server;
+        this.creatorUser = creatorUser;
+        this.name = dtoCreateTopic.name();
+        this.description = dtoCreateTopic.description();
+        this.creationDatetime = LocalDateTime.now();
+    }
 }
